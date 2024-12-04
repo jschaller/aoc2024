@@ -1,11 +1,15 @@
+Clear-Content .\increasingList.txt
+Clear-Content .\decreasingList.txt
 # Read in day input to Array List
 $dayInput = New-Object System.Collections.ArrayList
 Get-Content .\aoc_2_input.txt | % { $dayInput.Add($_)}
 
-# Create increasing Array list
+# Create increasing and decreasing Array lists
 $increasingList = New-Object System.Collections.ArrayList
+$decreasingList = New-Object System.Collections.ArrayList
 for($i = 0; $i -lt $dayInput.Count; $i++) {
     $increasingBool = $true
+    $decreasingBool = $true
     $numLevels = $dayInput[$i].split(' ').count
     for($levelCount = 0; $levelCount -lt ($numLevels-1); $levelCount++) {
         if([int]$dayInput[$i].split(' ')[$levelCount] -lt [int]$dayInput[$i].split(' ')[$levelCount + 1]) {
@@ -15,16 +19,6 @@ for($i = 0; $i -lt $dayInput.Count; $i++) {
             break
         }
     }
-    if($increasingBool) {
-        $increasingList.Add($dayInput[$i])
-    }
-}
-
-# Create decreasing Array List
-$decreasingList = New-Object System.Collections.ArrayList
-for($i = 0; $i -lt $dayInput.Count; $i++) {
-    $decreasingBool = $true
-    $numLevels = $dayInput[$i].split(' ').count
     for($levelCount = 0; $levelCount -lt ($numLevels-1); $levelCount++) {
         if([int]$dayInput[$i].split(' ')[$levelCount] -gt [int]$dayInput[$i].split(' ')[$levelCount + 1]) {
             #do nothing
@@ -33,7 +27,10 @@ for($i = 0; $i -lt $dayInput.Count; $i++) {
             break
         }
     }
-    if($decreasingBool) {
+    if($increasingBool -and -not $decreasingBool) {
+        $increasingList.Add($dayInput[$i])
+    }
+    if($decreasingBool -and -not $increasingBool) {
         $decreasingList.Add($dayInput[$i])
     }
 }
