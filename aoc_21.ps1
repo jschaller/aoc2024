@@ -1,5 +1,3 @@
-Clear-Content .\increasingList.txt
-Clear-Content .\decreasingList.txt
 # Read in day input to Array List
 $dayInput = New-Object System.Collections.ArrayList
 Get-Content .\aoc_2_input.txt | % { $dayInput.Add($_)}
